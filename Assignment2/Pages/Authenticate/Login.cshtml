@@ -1,0 +1,28 @@
+﻿@page
+@model LoginModel
+@{
+}
+
+<h1>Please login here</h1>
+<h3>Enter your details below</h3>
+<form method="post" class="mt-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" placeholder="abc123" asp-for="@Model.crenditial.username">
+        <label for="floatingInput">User Name</label>
+        <span asp-validation-for="@Model.crenditial.username" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="floatingPassword" placeholder="********" asp-for="@Model.crenditial.password">
+        <label for="floatingPassword">Password</label>
+        <span asp-validation-for="@Model.crenditial.username" class="text-danger"></span>
+    </div>
+
+    <div>
+        <input type="submit" class="btn btn-primary" value="Login"/>
+    </div>
+</form>
+<a asp-page="./Register" class="btn btn-secondary">Register</a>
+<a asp-page="../Index">Back To Home</a>
+
+

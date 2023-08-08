@@ -1,0 +1,77 @@
+﻿@page
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@model Assignment2.Pages.ProductManager.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@if (Accessor.HttpContext.Session.GetString("type") != null && Accessor.HttpContext.Session.GetString("type") == "1")
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].Supplier)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].QuantityPerUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].ProductImage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier.SupplierID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantityPerUnit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductImage)
+                </td>
+                <td>
+                    @if (Accessor.HttpContext.Session.GetString("type") != null && Accessor.HttpContext.Session.GetString("type") == "1")
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.ProductID">Edit</a>
+                        <a asp-page="./Details" asp-route-id="@item.ProductID">Details</a>
+                        <a asp-page="./Delete" asp-route-id="@item.ProductID">Delete</a>
+
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

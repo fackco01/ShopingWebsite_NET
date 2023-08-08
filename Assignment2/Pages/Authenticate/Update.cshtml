@@ -1,0 +1,35 @@
+﻿@page
+@model Assignment2.Pages.Authenticate.UpdateModel
+@{
+}
+
+<h1>Please Register here</h1>
+<h3>Enter your details below</h3>
+<form method="post" class="mt-3">
+    <input type="hidden" asp-for="@Model.account.AccountID" />
+    <div class="mb-3">
+        <label class="form-label">UserName</label>
+        <input asp-for="@Model.account.UserName" type="text" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input asp-for="@Model.account.Password" type="password" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Fullname</label>
+        <input asp-for="@Model.account.FullName" type="text" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Type</label>
+        <select asp-for="@Model.account.Type" class="form-select" required>
+            <option selected>Choose...</option>
+            <option value="1">Staff</option>
+            <option value="2">Normal</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<a asp-page="../Index">Back To Home</a>

@@ -1,0 +1,95 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1>Pizzas Menu</h1>
+
+<div class="container-md">
+    <form>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <label class="col-form-label">Search: </label>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="searchInput" class="form-control">
+            </div>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" type="button" id="search">Search</button>
+        </div>
+    </form>
+</div>
+
+
+<div class="container-md mt-5" id="resultSearch">
+    <h2>All Product</h2>
+    <div class="row justify-content-between" id="listSearch">
+
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#resultSearch').attr('hidden', 'true');
+
+            $('#search').on('click', function () {
+                //var search = $('#searchInput').val()
+                //console.log(search);
+                $.ajax({
+                    type: "GET",
+                    url: "?handler=Generate",
+                    data: {
+                        search: $('#searchInput').val()
+                    },
+                    error: function () {
+                        console.log("ERROR");
+                    },
+                    success: function (data) {
+                        console.log(data.length);
+                        if(data != null)
+                        {
+                            $('#resultSearch').removeAttr('hidden')
+                            $('#listSearch').empty();
+                            if(data.length < 1)
+                            {
+                                $('#listSearch').append("<string class='text-danger'>Not Found Item</strong>");
+                            }
+                            else
+                            {
+                                for (var i = 0; i < data.length; i++) {
+                                    //console.log(data[i]);
+
+                                    $('#listSearch').append(
+                                        "<div class='col-lg-4 mt-3'>" +
+                                        "<div class='card' style='width: 400px'>" +
+                                        "<img src='" + data[i].productImage.replace('~/', '') + "' class='card-img-top' alt=" + data[i].productName + "/>" +
+                                        "<div class='card-body'>" +
+                                        "<div class='row justify-content-between'>" +
+                                        "<h5 class='card-title col-lg-4 text-primary'>" + data[i].productName + "</h5>" +
+                                        "<h5 class='card-title col-lg-4'> $" + data[i].unitPrice + "</h5>" +
+                                        "</div>" +
+                                        "<strong> category: " + data[i].category.categoryName + "</strong>" +
+                                        "<p class= 'card-text'> " + data[i].category.description + "</p>" +
+                                        "<a href = '#' class='btn btn-primary'> add pizza </a>" +
+                                        "</div>" +
+                                        "</div>" +
+                                        "</div>");
+                                }
+                            }
+
+
+                        }
+                    }
+                });
+            })
+        })
+
+    </script>
+}
+
